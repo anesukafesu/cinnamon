@@ -1,0 +1,13 @@
+class Main
+    function main () void do
+        run Output.print_str("Hello, World!");
+        return;
+    end
+
+    function say_hello (string name) void do
+        declare string greeting;
+        set greeting = string.concat("Hello", name);
+        run Output.print_str("Hello");
+        return;
+    end;
+end

@@ -1,0 +1,44 @@
+class Fibonacci
+    function lte (int a, int b) bool do
+        if (a = b) do
+            return true;
+        end
+
+        if (a < b) do
+            return true;
+        end
+
+        return false;
+    end
+
+    function nth (int n) int do
+        declare int i, j, temp, count;
+
+        if (lte(n, 0)) do
+            run Output.print_str("n must be greater than 0");
+        end
+
+        if (n = 1) do
+            run Output.print_int(0);
+        end
+
+        set i = 0;
+        set j = 1;
+        set count = 1;
+
+        while (count < (n - 1)) do
+            set temp = i;
+            set i = j;
+            set j = temp + j;
+            set count = count + 1;
+        end
+
+        run Output.print_int(j);
+
+        return 0;
+    end
+
+    function up_to_n (int n) int do
+        run Output.print_str("Hello, World!");
+    end
+end

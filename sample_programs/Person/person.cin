@@ -1,0 +1,10 @@
+class Person
+    field string name;
+    field int age;
+
+    constructor new (int nameArg, int ageArg) Person do
+        set name = nameArg;
+        set age = ageArg;  
+        return this;
+    end
+end

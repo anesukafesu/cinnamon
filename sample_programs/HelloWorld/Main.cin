@@ -1,0 +1,13 @@
+class Main
+    function main () void do
+        declare int a, b, result;
+        declare array marks;
+        set marks = [100, 98, 99, 97, 95];
+
+        set a = 3;
+        set b = 2;
+        set result = a ^ b;
+
+        run Output.print_int(result);
+    end
+end
