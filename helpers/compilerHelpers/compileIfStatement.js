@@ -6,15 +6,13 @@ export function compileIfStatement(tokenStream, symbolTable, className) {
   let ifTrueCode = [];
   let elseCode = [];
 
-  // Eat if (
+  // Eat if
   tokenStream.eatValue("if");
-  tokenStream.eatValue("(");
 
   // Compile the expression between parentheses
   expressionCode = compileExpression(tokenStream, symbolTable, className);
 
-  // Compile ) do
-  tokenStream.eatValue(")");
+  // Compile do
   tokenStream.eatValue("do");
 
   // Compile the statements between curly braces

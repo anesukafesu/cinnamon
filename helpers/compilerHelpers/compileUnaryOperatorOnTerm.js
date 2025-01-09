@@ -1,3 +1,5 @@
+import { compileTerm } from "./index.js";
+
 export function compileUnaryOperatorOnTerm(
   tokenStream,
   symbolTable,

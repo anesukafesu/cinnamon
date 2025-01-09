@@ -26,8 +26,12 @@ function isUnderscore(char) {
   return char == "_";
 }
 
-function isQuoteMark(char) {
+function isDoubleQuote(char) {
   return char == '"';
+}
+
+function isSingleQuote(char) {
+  return char == "'";
 }
 
 function isForwardSlash(char) {
@@ -40,6 +44,14 @@ function isAsterisk(char) {
 
 function isNewline(char) {
   return !!newlinesLookup[char];
+}
+
+function isBackSlash(char) {
+  return char == "\\";
+}
+
+function isDot(char) {
+  return char == ".";
 }
 
 export function getCharacterType(char) {
@@ -61,6 +73,10 @@ export function getCharacterType(char) {
     return "symbol";
   }
 
+  if (isDot(char)) {
+    return "dot";
+  }
+
   if (isDigit(char)) {
     return "digit";
   }
@@ -69,8 +85,16 @@ export function getCharacterType(char) {
     return "underscore";
   }
 
-  if (isQuoteMark(char)) {
-    return "quote";
+  if (isDoubleQuote(char)) {
+    return "double_quote";
+  }
+
+  if (isSingleQuote(char)) {
+    return "single_quote";
+  }
+
+  if (isBackSlash(char)) {
+    return "back_slash";
   }
 
   if (isForwardSlash(char)) {

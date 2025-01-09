@@ -43,7 +43,7 @@ export function executeFunction(
 
     case "Output.print_char": {
       const charCode = args[0];
-      String.fromCharCode();
+      const char = String.fromCharCode(charCode);
       console.log(char);
       return 0;
     }
@@ -84,6 +84,52 @@ export function executeFunction(
       return address;
     }
 
+    case "String.length": {
+      const [address] = args;
+      return heap.get(address).length;
+    }
+
+    case "String.concat": {
+      // Map each address into a copy of the array at said address
+      const concatenatedArray = [].concat(
+        ...args.map((stringAddress) => heap.get(stringAddress))
+      );
+      const address = availableAddresses.pop();
+      heap.set(address, concatenatedArray);
+      return address;
+    }
+
+    case "Array.new": {
+      const address = availableAddresses.pop();
+      heap.set(address, []);
+      console.log(heap);
+      return address;
+    }
+
+    case "Array.append": {
+      const [address, element] = args;
+      heap.get(address).push(element);
+      console.log(heap);
+      return address;
+    }
+
+    case "Array.at": {
+      const [address, index] = args;
+      return heap.get(address)[index];
+    }
+
+    case "Array.length": {
+      const [arrayAddress] = args;
+      return heap.get(arrayAddress).length;
+    }
+
+    case "Array.dispose": {
+      const [arrayAddress] = args;
+      heap.delete(arrayAddress);
+      console.log(heap);
+      return 0;
+    }
+
     default: {
       // Extract the function details
       const { functionCode, nLocals } = code.get(functionName);
@@ -96,8 +142,8 @@ export function executeFunction(
       const temp = new Array(8).fill(0);
 
       // Create pointers to this and that
-      const thisPointer = 0;
-      const thatPointer = 0;
+      let thisPointer = 0;
+      let thatPointer = 0;
 
       // Create the stack
       const stack = [];
@@ -261,7 +307,7 @@ export function executeFunction(
             const b = stack.pop();
             const a = stack.pop();
 
-            stack.push(a & b);
+            stack.push(a && b ? -1 : 0);
             break;
           }
 
@@ -269,7 +315,7 @@ export function executeFunction(
             const b = stack.pop();
             const a = stack.pop();
 
-            stack.push(a | b);
+            stack.push(a || b ? -1 : 0);
             break;
           }
 
@@ -284,7 +330,7 @@ export function executeFunction(
             const b = stack.pop();
             const a = stack.pop();
 
-            stack.push(a < b);
+            stack.push(a < b ? -1 : 0);
             break;
           }
 
@@ -292,7 +338,7 @@ export function executeFunction(
             const b = stack.pop();
             const a = stack.pop();
 
-            stack.push(a > b);
+            stack.push(a > b ? -1 : 0);
             break;
           }
 
@@ -300,19 +346,21 @@ export function executeFunction(
             const b = stack.pop();
             const a = stack.pop();
 
-            stack.push(a == b);
+            stack.push(a == b ? -1 : 0);
             break;
           }
 
           case "goto": {
             const label = words[1];
-            const instructionNumber = labels[label];
+            const instructionNumber = labels.get(label);
             i = instructionNumber;
             break;
           }
 
           case "if-goto": {
             const condition = stack.pop();
+            const label = words[1];
+            const instructionNumber = labels.get(label);
             if (condition) {
               i = instructionNumber;
             }

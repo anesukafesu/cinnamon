@@ -37,7 +37,6 @@ export function compileExternalSubroutineCall(
     // owner is an object, not a class
     // nArgs must be incremented by one as the owner is the first argument
     nArgs += 1;
-    // TODO: Find way of determining class name
     return [
       `push ${symbol.representation}`,
       ...compiledArguments,

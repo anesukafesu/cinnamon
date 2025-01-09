@@ -1,13 +1,21 @@
 class Main
     function main () void do
-        declare int a, b, result;
-        declare array marks;
-        set marks = [100, 98, 99, 97, 95];
+        declare int i;
+        declare String output;
+        set i = 1;
 
-        set a = 3;
-        set b = 2;
-        set result = a ^ b;
+        while i < 16 do
+            set output = "";
 
-        run Output.print_int(result);
+            if i % 3 = 0 do
+                set output = String.concat(output, "Fizz");
+            end
+
+            if i % 5 = 0 do
+                set output = String.concat(output, "Buzz");
+            end
+
+            set i = i + 1;
+        end
     end
 end

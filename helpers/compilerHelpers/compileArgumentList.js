@@ -24,5 +24,7 @@ export function compileArgumentList(tokenStream, symbolTable, className) {
     nArgs += 1;
   }
 
+  console.log(nArgs);
+
   return { nArgs, compiledArguments };
 }

@@ -5,7 +5,6 @@ const symbols = [
   ")",
   "[",
   "]",
-  ".",
   ",",
   ";",
   "+",
@@ -18,6 +17,7 @@ const symbols = [
   "!",
   "|",
   "^",
+  "%",
 ];
 
 export const symbolLookup = Object.fromEntries(
